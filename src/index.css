@@ -1,0 +1,193 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* Base Root Configuration overrides */
+:root {
+  /* Soothing Minimalist Light Mode is Default */
+  --bg-base: #fbf9f4;
+  --text-main: #1e2530;
+  --text-muted: #6b7280;
+  --accent-orange: #d96b52; /* Terracotta coral */
+  --accent-blue: #457b9d;   /* Steel blue */
+  --accent-green: #3d8a63;  /* Soft sage green */
+  --glass-bg: rgba(251, 249, 244, 0.82);
+  --glass-border: rgba(30, 37, 48, 0.08);
+  --grid-color: rgba(30, 37, 48, 0.03);
+  --shadow-color: rgba(30, 37, 48, 0.04);
+  --shadow-glow: rgba(217, 107, 82, 0.12);
+}
+
+/* Dark mode configurations override body tag */
+body:not(.orbit-light-mode) {
+  --bg-base: #0c1017;
+  --text-main: #f3f4f6;
+  --text-muted: #9ca3af;
+  --accent-orange: #f97316;
+  --accent-blue: #3b82f6;
+  --accent-green: #10b981;
+  --glass-bg: rgba(12, 16, 23, 0.78);
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --grid-color: rgba(255, 255, 255, 0.02);
+  --shadow-color: rgba(0, 0, 0, 0.35);
+  --shadow-glow: rgba(249, 115, 22, 0.08);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-base);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-x: hidden;
+  /* Radial dot paper layout texture */
+  background-image: radial-gradient(var(--grid-color) 1.2px, transparent 1.2px);
+  background-size: 24px 24px;
+}
+
+/* Custom Scrollbar Physics */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 999px;
+  opacity: 0.3;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-orange);
+}
+
+/* Advanced Liquid Glassmorphism Core Classes */
+.liquid-glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 
+    0 4px 30px rgba(0, 0, 0, 0.03), 
+    0 10px 50px var(--shadow-color), 
+    inset 0 1px 2px rgba(255, 255, 255, 0.12),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.05);
+}
+
+/* Asynchronous Physics Keyframes */
+@keyframes orbital-drift-alpha {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(30px, -40px, 0) scale(1.06); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes orbital-drift-beta {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-35px, 35px, 0) scale(1.04); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+@keyframes orbital-drift-gamma {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(25px, 20px, 0) scale(1.02); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+/* Biometric Scan sweeping without clipping or jerkiness */
+@keyframes scanLineMovement {
+  0% { transform: translateY(-5%); }
+  50% { transform: translateY(105%); }
+  100% { transform: translateY(-5%); }
+}
+
+@keyframes horizontalTicker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Card-Specific Zero-Gravity Float keyframes to avoid simultaneous bouncing */
+@keyframes float-sidebar {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(0.3deg); }
+}
+
+@keyframes float-main {
+  0%, 100% { transform: translateY(0px) translate3d(0,0,0); }
+  50% { transform: translateY(-8px) translate3d(3px, -2px, 0); }
+}
+
+@keyframes float-leaderboard {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(-0.2deg); }
+}
+
+@keyframes float-bubble {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-9px) scale(1.03); }
+}
+
+/* Staggered Floating suspensions */
+.animate-drift-slow {
+  animation: orbital-drift-alpha 20s ease-in-out infinite;
+}
+
+.animate-drift-fast {
+  animation: orbital-drift-beta 14s ease-in-out infinite;
+}
+
+.animate-drift-gamma {
+  animation: orbital-drift-gamma 16s ease-in-out infinite alternate;
+}
+
+.animate-biometric-scan {
+  animation: scanLineMovement 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.animate-leaderboard-marquee {
+  animation: horizontalTicker 36s linear infinite;
+}
+
+/* Staggered Zero-Gravity Card Classes */
+.drift-sidebar {
+  animation: float-sidebar 5s ease-in-out infinite;
+}
+
+.drift-main {
+  animation: float-main 7s ease-in-out infinite;
+}
+
+.drift-leaderboard {
+  animation: float-leaderboard 6s ease-in-out infinite;
+}
+
+.drift-bubble {
+  animation: float-bubble 4.2s ease-in-out infinite;
+}
+
+/* High-Fidelity Interactive Vocabulary Underlines */
+.wavy-interactive-underline {
+  text-decoration-line: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: var(--accent-orange);
+  text-underline-offset: 5px;
+  text-decoration-thickness: 1.5px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 1px 2px;
+}
+.wavy-interactive-underline:hover {
+  color: var(--accent-orange);
+  background: rgba(217, 107, 82, 0.08);
+  border-radius: 6px;
+  padding: 1px 6px;
+  margin: 0 -4px;
+  box-shadow: 0 2px 8px rgba(217, 107, 82, 0.15);
+}
+body:not(.orbit-light-mode) .wavy-interactive-underline:hover {
+  background: rgba(249, 115, 22, 0.12);
+  box-shadow: 0 2px 10px rgba(249, 115, 22, 0.2);
+}

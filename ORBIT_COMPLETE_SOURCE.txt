@@ -1,0 +1,2045 @@
+================================================================================
+  ORBIT — COMPLETE SOURCE CODE DUMP
+  Anti-Gravity Outreach & Live Bootcamps
+  Generated: 2026-06-20
+================================================================================
+
+Tech Stack: React 19, Vite 8, Tailwind CSS 4, Framer Motion 12, Lucide React
+Project Root: C:\Users\vmitt\.gemini\antigravity-ide\scratch\orbit
+
+================================================================================
+  PROJECT STRUCTURE
+================================================================================
+
+orbit/
+├── index.html
+├── package.json
+├── vite.config.js
+├── public/
+│   └── favicon.svg
+└── src/
+    ├── main.jsx
+    ├── index.css
+    └── App.jsx
+
+================================================================================
+  FILE 1: package.json
+================================================================================
+
+{
+  "name": "orbit",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "framer-motion": "^12.40.0",
+    "lucide-react": "^1.21.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@tailwindcss/vite": "^4.3.1",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^10.3.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.6.0",
+    "tailwindcss": "^4.3.1",
+    "vite": "^8.0.12"
+  }
+}
+
+================================================================================
+  FILE 2: index.html
+================================================================================
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Orbit — The anti-gravity platform for frictionless school outreach and gamified live bootcamps. 1-Click campaigns meet biometric onboarding." />
+    <meta name="theme-color" content="#020617" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+    <title>Orbit — Anti-Gravity Outreach & Live Bootcamps</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+
+================================================================================
+  FILE 3: vite.config.js
+================================================================================
+
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+})
+
+================================================================================
+  FILE 4: public/favicon.svg
+================================================================================
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f97316"/>
+      <stop offset="50%" style="stop-color:#3b82f6"/>
+      <stop offset="100%" style="stop-color:#a855f7"/>
+    </linearGradient>
+  </defs>
+  <circle cx="50" cy="50" r="45" fill="none" stroke="url(#g)" stroke-width="6"/>
+  <circle cx="50" cy="50" r="8" fill="#f97316"/>
+  <circle cx="50" cy="12" r="5" fill="#3b82f6"/>
+  <ellipse cx="50" cy="50" rx="30" ry="12" fill="none" stroke="url(#g)" stroke-width="2" transform="rotate(-30 50 50)" opacity="0.5"/>
+</svg>
+
+================================================================================
+  FILE 5: src/main.jsx
+================================================================================
+
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+)
+
+================================================================================
+  FILE 6: src/index.css  (Styles / Design System)
+================================================================================
+
+@import "tailwindcss";
+
+/* ============================================================
+   ORBIT — ANTI-GRAVITY DESIGN SYSTEM
+   ============================================================ */
+
+/* --- Custom Theme Tokens --- */
+@theme {
+  --color-neon-orange: #f97316;
+  --color-neon-orange-glow: rgba(249, 115, 22, 0.4);
+  --color-electric-blue: #3b82f6;
+  --color-electric-blue-glow: rgba(59, 130, 246, 0.4);
+  --color-deep-dark: #020617;
+  --color-glass-light: rgba(255, 255, 255, 0.05);
+  --color-glass-border: rgba(255, 255, 255, 0.1);
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* --- Base Reset --- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   ORBITAL DRIFT — Floating background blobs
+   ============================================================ */
+@keyframes orbital-drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(30px, -50px) scale(1.05);
+  }
+  50% {
+    transform: translate(-20px, 20px) scale(0.95);
+  }
+  75% {
+    transform: translate(-40px, -30px) scale(1.08);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+.orbital-drift {
+  animation: orbital-drift 10s ease-in-out infinite;
+}
+
+.orbital-drift-slow {
+  animation: orbital-drift 18s ease-in-out infinite reverse;
+}
+
+.orbital-drift-fast {
+  animation: orbital-drift 6s ease-in-out infinite;
+}
+
+/* ============================================================
+   SCAN LINE — Biometric scanner effect
+   ============================================================ */
+@keyframes scan-line {
+  0% {
+    top: 0%;
+    opacity: 1;
+  }
+  50% {
+    top: 100%;
+    opacity: 0.6;
+  }
+  100% {
+    top: 0%;
+    opacity: 1;
+  }
+}
+
+.scan-line {
+  animation: scan-line 1.5s ease-in-out infinite;
+}
+
+/* ============================================================
+   LEADERBOARD TICKER — Horizontal scrolling
+   ============================================================ */
+@keyframes ticker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.leaderboard-ticker {
+  animation: ticker 22s linear infinite;
+}
+
+.leaderboard-ticker:hover {
+  animation-play-state: paused;
+}
+
+/* ============================================================
+   WAVY TERM — Interactive vocabulary words
+   ============================================================ */
+.wavy-term {
+  text-decoration-line: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: #f97316;
+  text-underline-offset: 4px;
+  cursor: help;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.wavy-term:hover {
+  color: #f97316;
+}
+
+/* ============================================================
+   GLASSMORPHISM UTILITIES
+   ============================================================ */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Light mode glass */
+.light .glass {
+  background: rgba(0, 0, 0, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.light .glass-strong {
+  background: rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================================
+   PULSE GLOW — for interactive elements
+   ============================================================ */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(249, 115, 22, 0.3), 0 0 60px rgba(249, 115, 22, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(249, 115, 22, 0.5), 0 0 80px rgba(249, 115, 22, 0.2);
+  }
+}
+
+.pulse-glow-orange {
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse-glow-blue {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3), 0 0 60px rgba(59, 130, 246, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.5), 0 0 80px rgba(59, 130, 246, 0.2);
+  }
+}
+
+.pulse-glow-blue {
+  animation: pulse-glow-blue 2.5s ease-in-out infinite;
+}
+
+/* ============================================================
+   FLOAT ANIMATION — Zero-gravity cards
+   ============================================================ */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.float-animation {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* ============================================================
+   SPIN SLOW — For companion AI bubble
+   ============================================================ */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+/* ============================================================
+   GRADIENT TEXT
+   ============================================================ */
+.gradient-text-orange {
+  background: linear-gradient(135deg, #f97316, #fb923c, #fdba74);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-blue {
+  background: linear-gradient(135deg, #3b82f6, #60a5fa, #93c5fd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-mixed {
+  background: linear-gradient(135deg, #f97316, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ============================================================
+   PROGRESS BAR ANIMATION
+   ============================================================ */
+@keyframes progress-shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.progress-shimmer {
+  background: linear-gradient(
+    90deg,
+    #f97316 0%,
+    #fb923c 25%,
+    #fdba74 50%,
+    #fb923c 75%,
+    #f97316 100%
+  );
+  background-size: 200% auto;
+  animation: progress-shimmer 2s linear infinite;
+}
+
+/* ============================================================
+   SCROLLBAR STYLING
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.light ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.light ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* ============================================================
+   FUNNEL VISUALIZATION
+   ============================================================ */
+@keyframes funnel-flow {
+  0% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.4;
+  }
+}
+
+.funnel-flow {
+  animation: funnel-flow 2s ease-in-out infinite;
+}
+
+/* ============================================================
+   TOOLTIP
+   ============================================================ */
+.tooltip-content {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  width: max-content;
+  max-width: 260px;
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* ============================================================
+   LIGHT MODE OVERRIDES
+   ============================================================ */
+.light .wavy-term:hover {
+  color: #ea580c;
+}
+
+/* ============================================================
+   FOURTH WALL BREAK — one word that doesn't belong
+   ============================================================ */
+.fourth-wall {
+  font-family: 'Comic Sans MS', 'Comic Sans', 'Chalkboard SE', cursive;
+  display: inline-block;
+  transform: rotate(-2deg);
+  font-style: italic;
+  cursor: help;
+  position: relative;
+  transition: all 0.3s ease;
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: rgba(249, 115, 22, 0.4);
+  text-underline-offset: 3px;
+}
+
+.fourth-wall:hover {
+  transform: rotate(0deg) scale(1.15);
+  color: #f97316;
+  text-decoration-color: #f97316;
+}
+
+/* ============================================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================================ */
+@media (max-width: 768px) {
+  .leaderboard-ticker {
+    animation-duration: 12s;
+  }
+}
+
+================================================================================
+  FILE 7: src/App.jsx  (MAIN APPLICATION — ~1512 lines)
+================================================================================
+
+import { useState, useRef, useMemo, useEffect, useCallback } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import {
+  Sun, Moon, Rocket, Users, School, Zap, Target, Check, X,
+  Brain, Sparkles, Trophy, Star, RotateCcw, Eye, Monitor,
+  Smartphone, Shield, ScanFace, Clock, BookOpen, Code, Palette,
+  Database, Globe, MessageCircle, Award, TrendingUp, Send,
+  Activity, ChevronRight, Play, GraduationCap, Cpu, Layers,
+  ArrowRight, CircleDot, Gauge, BarChart3, Bot
+} from 'lucide-react'
+
+/* ============================================================
+   CONSTANTS
+   ============================================================ */
+const ITINERARY_TOPICS = [
+  {
+    id: 1,
+    title: 'Intro to Web Development',
+    icon: Globe,
+    duration: '30 min',
+    content: `Welcome to the world of web development! Today we'll explore how the internet works at a fundamental level. Every website you visit is built using three core technologies: HTML for structure, CSS for styling, and JavaScript for interactivity. Understanding the Document Object Model (DOM) is crucial — it's the browser's internal representation of your webpage as a tree of nodes. We'll also cover how HTTP requests travel from your browser to a server and back, forming the backbone of the client-server architecture that powers the modern web.`,
+    terms: {
+      'DOM': 'The Document Object Model — a programming interface that represents the page as a tree of objects that scripts can manipulate.',
+      'HTTP': 'HyperText Transfer Protocol — the foundation of data communication on the web, defining how messages are formatted and transmitted.',
+      'client-server architecture': 'A computing model where the server hosts and delivers resources, and the client requests and displays them.',
+    },
+    quiz: {
+      question: 'What does DOM stand for?',
+      options: ['Document Object Model', 'Data Output Manager', 'Digital Online Module', 'Display Object Method'],
+      correct: 0,
+    },
+  },
+  {
+    id: 2,
+    title: 'React Fundamentals',
+    icon: Code,
+    duration: '45 min',
+    content: `React revolutionized frontend development by introducing a component-based architecture. Instead of manipulating the DOM directly, React uses a Virtual DOM — a lightweight copy of the real DOM that enables efficient reconciliation. Components are the building blocks: they accept props as inputs and return JSX, which is a syntax extension that looks like HTML but compiles to JavaScript. State management through hooks like useState allows components to be reactive, automatically re-rendering when data changes.`,
+    terms: {
+      'Virtual DOM': 'A lightweight JavaScript representation of the real DOM, used by React to batch and optimize UI updates efficiently.',
+      'JSX': 'A syntax extension for JavaScript that lets you write HTML-like markup inside JS files, compiled by Babel into React.createElement calls.',
+      'reconciliation': 'React\'s algorithm for diffing the Virtual DOM against the real DOM to determine the minimum set of changes needed.',
+      'props': 'Short for properties — read-only data passed from a parent component to a child component.',
+    },
+    quiz: {
+      question: 'What is the Virtual DOM?',
+      options: ['A lightweight copy of the real DOM', 'A CSS framework', 'A database system', 'A server protocol'],
+      correct: 0,
+    },
+  },
+  {
+    id: 3,
+    title: 'UI/UX Design Principles',
+    icon: Palette,
+    duration: '35 min',
+    content: `Great design is invisible — it guides users effortlessly. The core principles include visual hierarchy (directing the eye through size, color, and contrast), affordance (making elements look clickable or draggable), and cognitive load reduction. Modern design systems embrace responsive design through fluid typography and flexible grid layouts. Color theory plays a vital role: complementary colors create contrast, while analogous palettes feel harmonious. Whitespace isn't empty — it's a powerful tool for creating breathing room and focus.`,
+    terms: {
+      'visual hierarchy': 'The arrangement of elements to guide the viewer\'s eye in order of importance, using size, color, contrast, and spacing.',
+      'affordance': 'A design property that indicates how an element can be used — e.g., a raised button affords pressing.',
+      'cognitive load': 'The mental effort required to process information; good UX minimizes unnecessary cognitive burden on the user.',
+      'responsive design': 'An approach where layouts adapt fluidly to different screen sizes using flexible grids, images, and CSS media queries.',
+    },
+    quiz: {
+      question: 'What does "affordance" mean in design?',
+      options: ['How expensive a design is', 'A visual cue indicating how an element can be used', 'The loading speed of a page', 'A type of animation'],
+      correct: 1,
+    },
+  },
+  {
+    id: 4,
+    title: 'Backend & APIs',
+    icon: Database,
+    duration: '40 min',
+    content: `The backend is the engine room of any application. RESTful APIs provide a standardized way to communicate between client and server using HTTP methods: GET for reading, POST for creating, PUT for updating, and DELETE for removing resources. Each endpoint represents a resource, and responses typically use JSON as the data interchange format. Authentication is handled through JWT tokens — encoded payloads that verify identity without requiring a database lookup on every request. Understanding middleware is key — these are functions that intercept and process requests before they reach your route handlers.`,
+    terms: {
+      'RESTful APIs': 'Representational State Transfer — an architectural style for building web services using standard HTTP methods and stateless communication.',
+      'JSON': 'JavaScript Object Notation — a lightweight data interchange format that is easy for humans to read and machines to parse.',
+      'JWT': 'JSON Web Token — a compact, self-contained token for securely transmitting information between parties as a JSON object.',
+      'middleware': 'Functions that execute during the request-response cycle, used for logging, auth, error handling, and data transformation.',
+    },
+    quiz: {
+      question: 'Which HTTP method is used to create a new resource?',
+      options: ['GET', 'POST', 'DELETE', 'PATCH'],
+      correct: 1,
+    },
+  },
+  {
+    id: 5,
+    title: 'Deployment & DevOps',
+    icon: Rocket,
+    duration: '25 min',
+    content: `Shipping code to production is where development meets operations. CI/CD pipelines automate the process of testing, building, and deploying code every time changes are pushed. Containerization through Docker ensures your app runs identically across environments by packaging it with all its dependencies. Cloud platforms like AWS, GCP, and Vercel provide scalable infrastructure. Monitoring with observability tools helps track performance metrics, error rates, and user behavior in real-time, enabling proactive incident response.`,
+    terms: {
+      'CI/CD': 'Continuous Integration / Continuous Deployment — automated pipelines that test, build, and deploy code on every commit.',
+      'containerization': 'Packaging an application with its dependencies into a container (e.g., Docker) so it runs consistently across any environment.',
+      'observability': 'The ability to understand a system\'s internal state from its external outputs — logs, metrics, and traces.',
+    },
+    quiz: {
+      question: 'What does CI/CD stand for?',
+      options: ['Code Integration / Code Deployment', 'Continuous Integration / Continuous Deployment', 'Central Input / Central Distribution', 'Cloud Infrastructure / Cloud Design'],
+      correct: 1,
+    },
+  },
+]
+
+const LEADERBOARD_NAMES = [
+  { name: 'Aarav M.', xp: 2450 },
+  { name: 'Priya S.', xp: 2180 },
+  { name: 'Liam K.', xp: 1950 },
+  { name: 'Zara N.', xp: 1820 },
+  { name: 'Kai T.', xp: 1640 },
+  { name: 'Ananya R.', xp: 1510 },
+  { name: 'Noah B.', xp: 1380 },
+  { name: 'Mira J.', xp: 1200 },
+  { name: 'Ethan W.', xp: 1050 },
+  { name: 'Siya P.', xp: 920 },
+]
+
+const DEMOGRAPHICS = [
+  'Billabong High — Malad',
+  'Billabong High — Thane',
+  'Billabong High — Kandivali',
+  'Euroschool — Airoli',
+  'Euroschool — Thane',
+  'Euroschool — Undri',
+]
+
+/* ============================================================
+   AMBIENT SCENE — Floating orbs background
+   ============================================================ */
+function AmbientScene({ isDark }) {
+  return (
+    <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
+      {/* Primary gradient base */}
+      <div
+        className="absolute inset-0 transition-colors duration-700"
+        style={{
+          background: isDark
+            ? 'radial-gradient(ellipse at 20% 50%, rgba(249,115,22,0.08) 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(59,130,246,0.08) 0%, transparent 50%), #020617'
+            : 'radial-gradient(ellipse at 20% 50%, rgba(249,115,22,0.06) 0%, transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(59,130,246,0.06) 0%, transparent 50%), #f8fafc',
+        }}
+      />
+      {/* Orange orb */}
+      <div
+        className="orbital-drift absolute rounded-full"
+        style={{
+          width: 500,
+          height: 500,
+          top: '10%',
+          left: '5%',
+          background: isDark
+            ? 'radial-gradient(circle, rgba(249,115,22,0.15) 0%, rgba(249,115,22,0.05) 40%, transparent 70%)'
+            : 'radial-gradient(circle, rgba(249,115,22,0.1) 0%, rgba(249,115,22,0.03) 40%, transparent 70%)',
+          filter: 'blur(40px)',
+        }}
+      />
+      {/* Blue orb */}
+      <div
+        className="orbital-drift-slow absolute rounded-full"
+        style={{
+          width: 600,
+          height: 600,
+          top: '50%',
+          right: '0%',
+          background: isDark
+            ? 'radial-gradient(circle, rgba(59,130,246,0.15) 0%, rgba(59,130,246,0.05) 40%, transparent 70%)'
+            : 'radial-gradient(circle, rgba(59,130,246,0.1) 0%, rgba(59,130,246,0.03) 40%, transparent 70%)',
+          filter: 'blur(40px)',
+        }}
+      />
+      {/* Small accent orb */}
+      <div
+        className="orbital-drift-fast absolute rounded-full"
+        style={{
+          width: 300,
+          height: 300,
+          bottom: '10%',
+          left: '40%',
+          background: isDark
+            ? 'radial-gradient(circle, rgba(168,85,247,0.1) 0%, transparent 70%)'
+            : 'radial-gradient(circle, rgba(168,85,247,0.06) 0%, transparent 70%)',
+          filter: 'blur(30px)',
+        }}
+      />
+    </div>
+  )
+}
+
+/* ============================================================
+   STAT PILL — Animated stat badges in header
+   ============================================================ */
+function StatPill({ icon: Icon, label, value, color, isDark }) {
+  return (
+    <motion.div
+      className="glass rounded-full px-3 py-1.5 flex items-center gap-2 text-xs font-medium"
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.97 }}
+    >
+      <Icon size={13} style={{ color }} />
+      <span className={isDark ? 'text-slate-400' : 'text-slate-500'}>{label}</span>
+      <motion.span
+        key={value}
+        initial={{ scale: 1.4, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        className="font-bold"
+        style={{ color }}
+      >
+        {value}
+      </motion.span>
+    </motion.div>
+  )
+}
+
+/* ============================================================
+   HEADER — Glassmorphic top bar
+   ============================================================ */
+function Header({ theme, setTheme, view, setView, schoolsInvited, studentsRegistered, points, isDark, logAction }) {
+  const navItems = [
+    { id: 'organizer-dashboard', label: 'Organizer', icon: Monitor },
+    { id: 'student-onboarding', label: 'Onboard', icon: ScanFace },
+    { id: 'student-live', label: 'Live Event', icon: Zap },
+  ]
+
+  return (
+    <motion.header
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ type: 'spring', stiffness: 100, damping: 20 }}
+      className="fixed top-0 left-0 right-0 glass-strong rounded-none z-50"
+      style={{ borderTop: 'none', borderLeft: 'none', borderRight: 'none' }}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+        {/* Logo */}
+        <motion.div
+          className="flex items-center gap-2.5 cursor-pointer select-none"
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+          onClick={() => { setView('organizer-dashboard'); logAction('Navigated to home'); }}
+        >
+          <div className="relative">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+              className="w-8 h-8 rounded-full"
+              style={{
+                background: 'conic-gradient(from 0deg, #f97316, #3b82f6, #a855f7, #f97316)',
+              }}
+            />
+            <div
+              className="absolute inset-1 rounded-full"
+              style={{ background: isDark ? '#020617' : '#f8fafc' }}
+            />
+            <CircleDot
+              size={12}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+              style={{ color: '#f97316' }}
+            />
+          </div>
+          <span className={`text-lg font-bold tracking-tight ${isDark ? 'text-white' : 'text-slate-900'}`}>
+            Orbit
+          </span>
+        </motion.div>
+
+        {/* Nav Pills */}
+        <nav className="hidden md:flex items-center gap-1 glass rounded-full px-1.5 py-1">
+          {navItems.map((item) => (
+            <motion.button
+              key={item.id}
+              onClick={() => { setView(item.id); logAction(`Switched to ${item.label}`); }}
+              className={`relative px-4 py-1.5 rounded-full text-sm font-medium transition-colors duration-200 flex items-center gap-1.5 ${
+                view === item.id
+                  ? 'text-white'
+                  : isDark ? 'text-slate-400 hover:text-slate-200' : 'text-slate-500 hover:text-slate-800'
+              }`}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              {view === item.id && (
+                <motion.div
+                  layoutId="nav-pill"
+                  className="absolute inset-0 rounded-full"
+                  style={{ background: 'linear-gradient(135deg, #f97316, #ea580c)' }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                />
+              )}
+              <span className="relative z-10 flex items-center gap-1.5">
+                <item.icon size={14} />
+                {item.label}
+              </span>
+            </motion.button>
+          ))}
+        </nav>
+
+        {/* Right: Stats + Theme Toggle */}
+        <div className="flex items-center gap-2">
+          <div className="hidden sm:flex items-center gap-2">
+            <StatPill icon={School} label="Schools" value={schoolsInvited} color="#f97316" isDark={isDark} />
+            <StatPill icon={Users} label="Students" value={studentsRegistered} color="#3b82f6" isDark={isDark} />
+            <StatPill icon={Zap} label="XP" value={points} color="#a855f7" isDark={isDark} />
+          </div>
+          <motion.button
+            whileHover={{ scale: 1.1, rotate: 15 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => {
+              setTheme(theme === 'dark' ? 'light' : 'dark')
+              logAction(`Theme switched to ${theme === 'dark' ? 'light' : 'dark'}`)
+            }}
+            className={`ml-2 p-2 rounded-full transition-colors ${
+              isDark ? 'text-yellow-400 hover:bg-white/10' : 'text-slate-700 hover:bg-black/5'
+            }`}
+            aria-label="Toggle theme"
+          >
+            <AnimatePresence mode="wait">
+              {isDark ? (
+                <motion.div key="sun" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
+                  <Sun size={18} />
+                </motion.div>
+              ) : (
+                <motion.div key="moon" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
+                  <Moon size={18} />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.button>
+        </div>
+      </div>
+
+      {/* Mobile nav */}
+      <div className="flex md:hidden items-center gap-1 px-4 pb-2 overflow-x-auto">
+        {navItems.map((item) => (
+          <motion.button
+            key={item.id}
+            onClick={() => { setView(item.id); logAction(`Switched to ${item.label}`); }}
+            className={`shrink-0 px-3 py-1 rounded-full text-xs font-medium transition-colors ${
+              view === item.id
+                ? 'bg-orange-500 text-white'
+                : isDark ? 'text-slate-400 bg-white/5' : 'text-slate-500 bg-black/5'
+            }`}
+            whileTap={{ scale: 0.95 }}
+          >
+            {item.label}
+          </motion.button>
+        ))}
+        <div className="flex sm:hidden items-center gap-2 ml-2">
+          <StatPill icon={Zap} label="" value={points} color="#a855f7" isDark={isDark} />
+        </div>
+      </div>
+    </motion.header>
+  )
+}
+
+/* ============================================================
+   ORGANIZER DASHBOARD — 1-Click Campaigner + Live Funnel
+   ============================================================ */
+function OrganizerDashboard({ schoolsInvited, setSchoolsInvited, studentsRegistered, setStudentsRegistered, isDark, logAction }) {
+  const [selectedDemos, setSelectedDemos] = useState([])
+  const [campaignActive, setCampaignActive] = useState(false)
+  const [campaignProgress, setCampaignProgress] = useState(0)
+  const [campaignComplete, setCampaignComplete] = useState(false)
+  const [invitesSent, setInvitesSent] = useState(0)
+  const intervalRef = useRef(null)
+
+  const toggleDemo = (demo) => {
+    setSelectedDemos((prev) =>
+      prev.includes(demo) ? prev.filter((d) => d !== demo) : [...prev, demo]
+    )
+  }
+
+  const deployCampaign = () => {
+    if (selectedDemos.length === 0 || campaignActive) return
+    setCampaignActive(true)
+    setCampaignComplete(false)
+    setCampaignProgress(0)
+    logAction(`Campaign deployed to ${selectedDemos.length} demographics`)
+
+    const totalInvites = selectedDemos.length * 45
+    let current = 0
+
+    intervalRef.current = setInterval(() => {
+      current += 2
+      if (current >= 100) {
+        current = 100
+        clearInterval(intervalRef.current)
+        setCampaignActive(false)
+        setCampaignComplete(true)
+        setInvitesSent(totalInvites)
+        const newSchools = Math.round(totalInvites * 0.48)
+        const newStudents = Math.round(newSchools * 12)
+        setSchoolsInvited((prev) => prev + newSchools)
+        setStudentsRegistered((prev) => prev + newStudents)
+        logAction(`Campaign complete: ${totalInvites} invites → ${newSchools} schools → ${newStudents} students`)
+      }
+      setCampaignProgress(current)
+    }, 60)
+  }
+
+  useEffect(() => {
+    return () => { if (intervalRef.current) clearInterval(intervalRef.current) }
+  }, [])
+
+  const schoolsAccepted = useMemo(() => Math.round(invitesSent * 0.48), [invitesSent])
+  const studentsFromCampaign = useMemo(() => Math.round(schoolsAccepted * 12), [schoolsAccepted])
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -30 }}
+      transition={{ duration: 0.5 }}
+      className="max-w-6xl mx-auto px-4 sm:px-6 pt-28 pb-32"
+    >
+      {/* Section header */}
+      <motion.div
+        className="text-center mb-12"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+      >
+        <motion.div
+          className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-medium mb-4"
+          animate={{ y: [0, -4, 0] }}
+          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <Rocket size={14} className="text-orange-500" />
+          <span className={isDark ? 'text-slate-300' : 'text-slate-600'}>B2B Organizer Suite</span>
+        </motion.div>
+        <h1 className={`text-4xl sm:text-5xl font-bold tracking-tight mb-3 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+          1-Click <span className="gradient-text-orange">Campaigner</span>
+        </h1>
+        <p className={`text-lg max-w-xl mx-auto ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+          Deploy school outreach campaigns at{' '}
+          <span className="fourth-wall" title="yes, this is a demo 😉">scale</span>.
+          {' '}Select your demographics, hit deploy, and watch registrations flow in.
+        </p>
+      </motion.div>
+
+      <div className="grid lg:grid-cols-2 gap-6">
+        {/* Campaigner Card */}
+        <motion.div
+          className="glass rounded-2xl p-6 sm:p-8"
+          animate={{ y: [0, -5, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #f97316, #ea580c)' }}>
+              <Target size={20} className="text-white" />
+            </div>
+            <div>
+              <h2 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Target Demographics</h2>
+              <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Select segments for outreach</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-6">
+            {DEMOGRAPHICS.map((demo) => {
+              const selected = selectedDemos.includes(demo)
+              return (
+                <motion.button
+                  key={demo}
+                  onClick={() => toggleDemo(demo)}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`relative text-left px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 border ${
+                    selected
+                      ? 'border-orange-500/50 text-orange-400'
+                      : isDark
+                        ? 'border-white/5 text-slate-400 hover:border-white/15'
+                        : 'border-black/5 text-slate-600 hover:border-black/15'
+                  }`}
+                  style={selected ? { background: isDark ? 'rgba(249,115,22,0.1)' : 'rgba(249,115,22,0.08)' } : {}}
+                >
+                  <span className="flex items-center gap-2">
+                    {selected && <Check size={14} className="text-orange-500" />}
+                    {demo}
+                  </span>
+                </motion.button>
+              )
+            })}
+          </div>
+
+          {/* Progress bar */}
+          {(campaignActive || campaignComplete) && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              className="mb-6"
+            >
+              <div className="flex justify-between text-xs mb-2">
+                <span className={isDark ? 'text-slate-400' : 'text-slate-500'}>
+                  {campaignActive ? 'Deploying invites...' : 'Campaign complete!'}
+                </span>
+                <span className="text-orange-500 font-bold">{campaignProgress}%</span>
+              </div>
+              <div className={`h-2.5 rounded-full overflow-hidden ${isDark ? 'bg-white/5' : 'bg-black/5'}`}>
+                <motion.div
+                  className="h-full rounded-full progress-shimmer"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${campaignProgress}%` }}
+                  transition={{ duration: 0.3 }}
+                />
+              </div>
+            </motion.div>
+          )}
+
+          {/* Deploy button */}
+          <motion.button
+            onClick={deployCampaign}
+            disabled={selectedDemos.length === 0 || campaignActive}
+            whileHover={{ scale: selectedDemos.length > 0 && !campaignActive ? 1.02 : 1 }}
+            whileTap={{ scale: selectedDemos.length > 0 && !campaignActive ? 0.98 : 1 }}
+            className={`w-full py-3.5 rounded-xl text-sm font-bold tracking-wide transition-all duration-300 flex items-center justify-center gap-2 ${
+              selectedDemos.length === 0 || campaignActive
+                ? isDark ? 'bg-white/5 text-slate-600 cursor-not-allowed' : 'bg-black/5 text-slate-400 cursor-not-allowed'
+                : 'text-white pulse-glow-orange cursor-pointer'
+            }`}
+            style={selectedDemos.length > 0 && !campaignActive ? { background: 'linear-gradient(135deg, #f97316, #ea580c)' } : {}}
+          >
+            {campaignActive ? (
+              <>
+                <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}>
+                  <Cpu size={16} />
+                </motion.div>
+                Deploying...
+              </>
+            ) : campaignComplete ? (
+              <>
+                <Check size={16} />
+                Deploy Again
+              </>
+            ) : (
+              <>
+                <Send size={16} />
+                Deploy Invites — {selectedDemos.length} Segment{selectedDemos.length !== 1 ? 's' : ''}
+              </>
+            )}
+          </motion.button>
+        </motion.div>
+
+        {/* Live Funnel Card */}
+        <motion.div
+          className="glass rounded-2xl p-6 sm:p-8"
+          animate={{ y: [0, -5, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+        >
+          <div className="flex items-center gap-3 mb-8">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #3b82f6, #2563eb)' }}>
+              <BarChart3 size={20} className="text-white" />
+            </div>
+            <div>
+              <h2 className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Live Conversion Funnel</h2>
+              <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Real-time outreach analytics</p>
+            </div>
+          </div>
+
+          {/* Funnel stages */}
+          <div className="space-y-4">
+            {[
+              { label: 'Invites Sent', value: invitesSent, percent: 100, color: '#f97316', icon: Send },
+              { label: 'Schools Accepted (48%)', value: schoolsAccepted, percent: 48, color: '#3b82f6', icon: School },
+              { label: 'Students Registered', value: studentsFromCampaign, percent: studentsFromCampaign > 0 ? Math.round((studentsFromCampaign / Math.max(invitesSent, 1)) * 100) : 0, color: '#a855f7', icon: Users },
+            ].map((stage, i) => (
+              <motion.div
+                key={stage.label}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.15 }}
+              >
+                <div className="flex justify-between items-center mb-2">
+                  <span className={`text-sm font-medium flex items-center gap-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
+                    <stage.icon size={14} style={{ color: stage.color }} />
+                    {stage.label}
+                  </span>
+                  <motion.span
+                    key={stage.value}
+                    initial={{ scale: 1.3 }}
+                    animate={{ scale: 1 }}
+                    className="text-sm font-bold"
+                    style={{ color: stage.color }}
+                  >
+                    {stage.value.toLocaleString()}
+                  </motion.span>
+                </div>
+                <div className={`h-3 rounded-full overflow-hidden ${isDark ? 'bg-white/5' : 'bg-black/5'}`}>
+                  <motion.div
+                    className="h-full rounded-full"
+                    initial={{ width: 0 }}
+                    animate={{ width: `${Math.min(stage.percent, 100)}%` }}
+                    transition={{ duration: 1, delay: i * 0.2 }}
+                    style={{ background: `linear-gradient(90deg, ${stage.color}, ${stage.color}88)` }}
+                  />
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Summary metrics */}
+          <div className="grid grid-cols-3 gap-3 mt-8">
+            {[
+              { label: 'Total Schools', value: schoolsInvited, icon: School, color: '#f97316' },
+              { label: 'Total Students', value: studentsRegistered, icon: GraduationCap, color: '#3b82f6' },
+              { label: 'Conversion', value: invitesSent > 0 ? '48%' : '—', icon: TrendingUp, color: '#10b981' },
+            ].map((metric) => (
+              <motion.div
+                key={metric.label}
+                className={`text-center p-3 rounded-xl ${isDark ? 'bg-white/5' : 'bg-black/3'}`}
+                whileHover={{ scale: 1.05 }}
+              >
+                <metric.icon size={18} className="mx-auto mb-1" style={{ color: metric.color }} />
+                <motion.div
+                  key={metric.value}
+                  initial={{ scale: 1.2 }}
+                  animate={{ scale: 1 }}
+                  className={`text-xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}
+                >
+                  {typeof metric.value === 'number' ? metric.value.toLocaleString() : metric.value}
+                </motion.div>
+                <div className={`text-[10px] mt-0.5 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>{metric.label}</div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    </motion.div>
+  )
+}
+
+/* ============================================================
+   STUDENT ONBOARDING — Biometric Scan (Lumos/Argus)
+   ============================================================ */
+function StudentOnboarding({ setStudentsRegistered, setView, isDark, logAction }) {
+  const [scanning, setScanning] = useState(false)
+  const [verified, setVerified] = useState(false)
+  const [ticketMinted, setTicketMinted] = useState(false)
+
+  const startScan = () => {
+    if (scanning || verified) return
+    setScanning(true)
+    logAction('Biometric scan initiated')
+
+    setTimeout(() => {
+      setScanning(false)
+      setVerified(true)
+      setStudentsRegistered((prev) => prev + 1)
+      logAction('Student verified — ticket minted')
+
+      setTimeout(() => {
+        setTicketMinted(true)
+      }, 600)
+
+      setTimeout(() => {
+        setView('student-live')
+        logAction('Auto-routed to Live Event')
+      }, 2500)
+    }, 2000)
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -30 }}
+      transition={{ duration: 0.5 }}
+      className="max-w-lg mx-auto px-4 pt-28 pb-32 flex flex-col items-center"
+    >
+      <motion.div
+        className="inline-flex items-center gap-2 glass rounded-full px-4 py-1.5 text-xs font-medium mb-6"
+        animate={{ y: [0, -4, 0] }}
+        transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+      >
+        <Shield size={14} className="text-blue-500" />
+        <span className={isDark ? 'text-slate-300' : 'text-slate-600'}>Lumos / Argus Biometric</span>
+      </motion.div>
+
+      <h1 className={`text-3xl sm:text-4xl font-bold tracking-tight mb-2 text-center ${isDark ? 'text-white' : 'text-slate-900'}`}>
+        Zero-Form <span className="gradient-text-blue">Onboarding</span>
+      </h1>
+      <p className={`text-sm mb-10 text-center ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+        No passwords. No forms. Just you.
+      </p>
+
+      {/* Scanner UI */}
+      <motion.div
+        className="relative w-64 h-80 sm:w-72 sm:h-[22rem] rounded-3xl overflow-hidden glass-strong"
+        animate={{ y: [0, -6, 0] }}
+        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+        style={{
+          boxShadow: verified
+            ? '0 0 40px rgba(16,185,129,0.3), 0 0 80px rgba(16,185,129,0.1)'
+            : scanning
+              ? '0 0 40px rgba(59,130,246,0.3), 0 0 80px rgba(59,130,246,0.1)'
+              : '0 0 30px rgba(59,130,246,0.15)',
+        }}
+      >
+        {/* Face icon placeholder area */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <motion.div
+            animate={verified ? { scale: [1, 1.1, 1] } : scanning ? { opacity: [0.5, 1, 0.5] } : {}}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          >
+            {verified ? (
+              <motion.div
+                initial={{ scale: 0, rotate: -180 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+                className="w-24 h-24 rounded-full flex items-center justify-center"
+                style={{ background: 'linear-gradient(135deg, #10b981, #059669)' }}
+              >
+                <Check size={48} className="text-white" />
+              </motion.div>
+            ) : (
+              <ScanFace size={80} className={`${isDark ? 'text-slate-600' : 'text-slate-300'}`} />
+            )}
+          </motion.div>
+        </div>
+
+        {/* Scan line */}
+        {scanning && (
+          <div
+            className="scan-line absolute left-0 right-0 h-0.5"
+            style={{
+              background: 'linear-gradient(90deg, transparent, #3b82f6, #60a5fa, #3b82f6, transparent)',
+              boxShadow: '0 0 20px rgba(59,130,246,0.8)',
+            }}
+          />
+        )}
+
+        {/* Corner brackets */}
+        {['top-3 left-3', 'top-3 right-3', 'bottom-3 left-3', 'bottom-3 right-3'].map((pos, i) => (
+          <div
+            key={pos}
+            className={`absolute ${pos} w-8 h-8`}
+            style={{
+              borderColor: verified ? '#10b981' : scanning ? '#3b82f6' : isDark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.1)',
+              borderWidth: 2,
+              borderStyle: 'solid',
+              borderTopStyle: i < 2 ? 'solid' : 'none',
+              borderBottomStyle: i >= 2 ? 'solid' : 'none',
+              borderLeftStyle: i % 2 === 0 ? 'solid' : 'none',
+              borderRightStyle: i % 2 === 1 ? 'solid' : 'none',
+              borderRadius: [
+                i === 0 ? '8px' : '0',
+                i === 1 ? '8px' : '0',
+                i === 3 ? '8px' : '0',
+                i === 2 ? '8px' : '0',
+              ].join(' '),
+              transition: 'border-color 0.3s',
+            }}
+          />
+        ))}
+
+        {/* Status text */}
+        <div className="absolute bottom-6 left-0 right-0 text-center">
+          <AnimatePresence mode="wait">
+            {verified ? (
+              <motion.div key="verified" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+                <p className="text-emerald-400 text-sm font-bold">✓ Identity Verified</p>
+                <p className={`text-xs mt-1 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Minting your ticket...</p>
+              </motion.div>
+            ) : scanning ? (
+              <motion.div key="scanning" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+                <p className="text-blue-400 text-sm font-medium">Scanning biometrics...</p>
+              </motion.div>
+            ) : (
+              <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                <p className={`text-xs ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>Ready to scan</p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </motion.div>
+
+      {/* Digital Ticket */}
+      <AnimatePresence>
+        {ticketMinted && (
+          <motion.div
+            initial={{ opacity: 0, y: 30, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+            className="mt-6 glass rounded-2xl p-5 w-full max-w-xs text-center"
+            style={{ boxShadow: '0 0 30px rgba(16,185,129,0.15)' }}
+          >
+            <div className="text-emerald-500 text-xs font-bold uppercase tracking-widest mb-1">Digital Ticket</div>
+            <div className={`text-lg font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Orbit Bootcamp 2026</div>
+            <div className={`text-xs mt-1 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
+              Seat #{Math.floor(Math.random() * 900 + 100)} · VIP Access
+            </div>
+            <div className="flex justify-center gap-1 mt-3">
+              {[...Array(12)].map((_, i) => (
+                <div key={i} className={`w-1.5 ${i % 3 === 0 ? 'h-6' : 'h-4'} rounded-full ${isDark ? 'bg-white/20' : 'bg-black/10'}`} />
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Join button */}
+      {!verified && (
+        <motion.button
+          onClick={startScan}
+          disabled={scanning}
+          whileHover={{ scale: scanning ? 1 : 1.03 }}
+          whileTap={{ scale: scanning ? 1 : 0.97 }}
+          className={`mt-8 px-8 py-3.5 rounded-xl text-sm font-bold tracking-wide transition-all duration-300 flex items-center gap-2 ${
+            scanning
+              ? isDark ? 'bg-white/5 text-slate-500 cursor-not-allowed' : 'bg-black/5 text-slate-400 cursor-not-allowed'
+              : 'text-white cursor-pointer pulse-glow-blue'
+          }`}
+          style={!scanning ? { background: 'linear-gradient(135deg, #3b82f6, #2563eb)' } : {}}
+        >
+          {scanning ? (
+            <>
+              <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}>
+                <Cpu size={16} />
+              </motion.div>
+              Scanning...
+            </>
+          ) : (
+            <>
+              <ScanFace size={16} />
+              Join Bootcamp
+            </>
+          )}
+        </motion.button>
+      )}
+    </motion.div>
+  )
+}
+
+/* ============================================================
+   WAVY TERM COMPONENT — Interactive vocabulary with tooltips
+   ============================================================ */
+function WavyTerm({ children, definition, isDark }) {
+  const [showTooltip, setShowTooltip] = useState(false)
+
+  return (
+    <span
+      className="wavy-term inline-block relative"
+      onMouseEnter={() => setShowTooltip(true)}
+      onMouseLeave={() => setShowTooltip(false)}
+    >
+      {children}
+      <AnimatePresence>
+        {showTooltip && (
+          <motion.div
+            initial={{ opacity: 0, y: 6, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 6, scale: 0.95 }}
+            transition={{ duration: 0.15 }}
+            className="tooltip-content glass-strong rounded-xl"
+            style={{
+              background: isDark ? 'rgba(15,23,42,0.95)' : 'rgba(255,255,255,0.95)',
+              color: isDark ? '#cbd5e1' : '#475569',
+              border: isDark ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(0,0,0,0.08)',
+            }}
+          >
+            <div className="text-orange-500 text-[10px] font-bold uppercase tracking-wider mb-1">Definition</div>
+            {definition}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </span>
+  )
+}
+
+/* ============================================================
+   STUDENT LIVE EVENT — The Gamified B2C View
+   ============================================================ */
+function StudentLive({ points, setPoints, isDark, logAction }) {
+  const [checkedTopics, setCheckedTopics] = useState([])
+  const [activeTopic, setActiveTopic] = useState(ITINERARY_TOPICS[0])
+  const [quizTopic, setQuizTopic] = useState(null)
+  const [quizAnswer, setQuizAnswer] = useState(null)
+  const [quizResult, setQuizResult] = useState(null) // 'correct' | 'wrong'
+  const [companionExpanded, setCompanionExpanded] = useState(false)
+  const [xpPopup, setXpPopup] = useState(null)
+
+  const progress = useMemo(
+    () => Math.round((checkedTopics.length / ITINERARY_TOPICS.length) * 100),
+    [checkedTopics]
+  )
+
+  const leaderboardData = useMemo(() => {
+    const userEntry = { name: 'You', xp: points, isUser: true }
+    const all = [...LEADERBOARD_NAMES, userEntry]
+    all.sort((a, b) => b.xp - a.xp)
+    return all
+  }, [points])
+
+  const handleTopicCheck = (topic) => {
+    if (checkedTopics.includes(topic.id)) return
+
+    setCheckedTopics((prev) => [...prev, topic.id])
+    setPoints((prev) => prev + 50)
+    setActiveTopic(topic)
+    logAction(`Completed topic: ${topic.title} (+50 XP)`)
+
+    // Show XP popup
+    setXpPopup('+50 XP')
+    setTimeout(() => setXpPopup(null), 1500)
+
+    // Trigger companion quiz
+    setTimeout(() => {
+      setQuizTopic(topic)
+      setQuizAnswer(null)
+      setQuizResult(null)
+      setCompanionExpanded(true)
+    }, 500)
+  }
+
+  const handleQuizAnswer = (idx) => {
+    if (quizResult) return
+    setQuizAnswer(idx)
+    const correct = quizTopic.quiz.correct === idx
+    setQuizResult(correct ? 'correct' : 'wrong')
+
+    if (correct) {
+      setPoints((prev) => prev + 100)
+      logAction(`Quiz correct: ${quizTopic.title} (+100 XP)`)
+      setXpPopup('+100 XP')
+      setTimeout(() => setXpPopup(null), 1500)
+    } else {
+      logAction(`Quiz incorrect: ${quizTopic.title}`)
+    }
+
+    setTimeout(() => {
+      setCompanionExpanded(false)
+      setQuizTopic(null)
+      setQuizAnswer(null)
+      setQuizResult(null)
+    }, 2000)
+  }
+
+  // Render content with wavy terms
+  const renderContent = (topic) => {
+    if (!topic.terms || Object.keys(topic.terms).length === 0) return topic.content
+
+    let segments = [topic.content]
+    const termEntries = Object.entries(topic.terms)
+
+    termEntries.forEach(([term]) => {
+      const newSegments = []
+      segments.forEach((seg) => {
+        if (typeof seg !== 'string') {
+          newSegments.push(seg)
+          return
+        }
+        const parts = seg.split(new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'i'))
+        parts.forEach((part) => {
+          if (part.toLowerCase() === term.toLowerCase()) {
+            newSegments.push({ term, definition: topic.terms[term], text: part })
+          } else {
+            newSegments.push(part)
+          }
+        })
+      })
+      segments = newSegments
+    })
+
+    return segments.map((seg, i) => {
+      if (typeof seg === 'string') return <span key={i}>{seg}</span>
+      return (
+        <WavyTerm key={`${seg.term}-${i}`} definition={seg.definition} isDark={isDark}>
+          {seg.text}
+        </WavyTerm>
+      )
+    })
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -30 }}
+      transition={{ duration: 0.5 }}
+      className="max-w-7xl mx-auto px-4 sm:px-6 pt-24 pb-32"
+    >
+      {/* XP Popup */}
+      <AnimatePresence>
+        {xpPopup && (
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.8 }}
+            animate={{ opacity: 1, y: -20, scale: 1 }}
+            exit={{ opacity: 0, y: -60, scale: 0.5 }}
+            transition={{ duration: 0.5 }}
+            className="fixed top-24 left-1/2 -translate-x-1/2 z-50 px-5 py-2 rounded-full text-sm font-bold text-white"
+            style={{ background: 'linear-gradient(135deg, #f97316, #a855f7)' }}
+          >
+            <Sparkles size={14} className="inline mr-1" />
+            {xpPopup}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Leaderboard Ticker */}
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+        className="glass rounded-2xl overflow-hidden mb-6 py-3"
+      >
+        <div className="flex items-center">
+          <div className="shrink-0 flex items-center gap-2 px-4 border-r" style={{ borderColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)' }}>
+            <Trophy size={14} className="text-yellow-500" />
+            <span className={`text-xs font-bold uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Live</span>
+          </div>
+          <div className="overflow-hidden flex-1">
+            <div className="leaderboard-ticker flex items-center gap-6 whitespace-nowrap px-4">
+              {[...leaderboardData, ...leaderboardData].map((entry, i) => (
+                <span
+                  key={`${entry.name}-${i}`}
+                  className={`flex items-center gap-2 text-sm ${
+                    entry.isUser
+                      ? 'text-orange-500 font-bold'
+                      : isDark ? 'text-slate-400' : 'text-slate-500'
+                  }`}
+                >
+                  {i < leaderboardData.length && i < 3 && (
+                    <span className="text-yellow-500">{['🥇', '🥈', '🥉'][i]}</span>
+                  )}
+                  <span className={entry.isUser ? 'text-orange-500' : isDark ? 'text-slate-300' : 'text-slate-700'}>
+                    {entry.name}
+                  </span>
+                  <span className="font-mono text-xs" style={{ color: entry.isUser ? '#f97316' : '#a855f7' }}>
+                    {entry.xp.toLocaleString()} XP
+                  </span>
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Main content grid */}
+      <div className="grid lg:grid-cols-12 gap-6">
+        {/* Itinerary Sidebar */}
+        <motion.div
+          className="lg:col-span-3 glass rounded-2xl p-5"
+          animate={{ y: [0, -4, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <div className="flex items-center justify-between mb-4">
+            <h2 className={`text-sm font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+              <BookOpen size={14} className="inline mr-1.5 text-orange-500" />
+              Itinerary
+            </h2>
+            <span className="text-xs font-bold text-orange-500">{progress}%</span>
+          </div>
+
+          {/* Progress bar */}
+          <div className={`h-1.5 rounded-full mb-5 ${isDark ? 'bg-white/5' : 'bg-black/5'}`}>
+            <motion.div
+              className="h-full rounded-full"
+              style={{ background: 'linear-gradient(90deg, #f97316, #a855f7)' }}
+              animate={{ width: `${progress}%` }}
+              transition={{ duration: 0.5 }}
+            />
+          </div>
+
+          {/* Topics */}
+          <div className="space-y-1.5">
+            {ITINERARY_TOPICS.map((topic, i) => {
+              const checked = checkedTopics.includes(topic.id)
+              const isActive = activeTopic?.id === topic.id
+              const TopicIcon = topic.icon
+
+              return (
+                <motion.button
+                  key={topic.id}
+                  onClick={() => {
+                    setActiveTopic(topic)
+                    if (!checked) handleTopicCheck(topic)
+                  }}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`w-full text-left p-3 rounded-xl flex items-start gap-3 transition-all duration-200 ${
+                    isActive
+                      ? isDark ? 'bg-white/8' : 'bg-black/5'
+                      : isDark ? 'hover:bg-white/5' : 'hover:bg-black/3'
+                  }`}
+                  style={isActive ? { borderLeft: '2px solid #f97316' } : { borderLeft: '2px solid transparent' }}
+                >
+                  <div className={`w-6 h-6 rounded-lg flex items-center justify-center shrink-0 mt-0.5 transition-colors ${
+                    checked
+                      ? 'bg-emerald-500/20'
+                      : isDark ? 'bg-white/5' : 'bg-black/5'
+                  }`}>
+                    {checked ? (
+                      <Check size={12} className="text-emerald-500" />
+                    ) : (
+                      <span className={`text-[10px] font-bold ${isDark ? 'text-slate-600' : 'text-slate-400'}`}>{i + 1}</span>
+                    )}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className={`text-xs font-medium leading-tight ${
+                      checked
+                        ? isDark ? 'text-slate-500 line-through' : 'text-slate-400 line-through'
+                        : isDark ? 'text-slate-300' : 'text-slate-700'
+                    }`}>
+                      {topic.title}
+                    </p>
+                    <p className={`text-[10px] mt-0.5 flex items-center gap-1 ${isDark ? 'text-slate-600' : 'text-slate-400'}`}>
+                      <Clock size={9} />
+                      {topic.duration}
+                    </p>
+                  </div>
+                </motion.button>
+              )
+            })}
+          </div>
+        </motion.div>
+
+        {/* Main Stage */}
+        <motion.div
+          className="lg:col-span-9 glass rounded-2xl p-6 sm:p-8"
+          animate={{ y: [0, -5, 0] }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTopic?.id}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              {/* Topic header */}
+              <div className="flex items-start gap-4 mb-6">
+                <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: 'linear-gradient(135deg, #f97316, #ea580c)' }}>
+                  {activeTopic && <activeTopic.icon size={24} className="text-white" />}
+                </div>
+                <div>
+                  <h2 className={`text-xl sm:text-2xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                    {activeTopic?.title}
+                  </h2>
+                  <div className="flex items-center gap-3 mt-1">
+                    <span className={`text-xs flex items-center gap-1 ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
+                      <Clock size={11} />
+                      {activeTopic?.duration}
+                    </span>
+                    {checkedTopics.includes(activeTopic?.id) && (
+                      <span className="text-xs text-emerald-500 font-medium flex items-center gap-1">
+                        <Check size={11} />
+                        Completed
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Content with wavy terms */}
+              <div className={`text-sm sm:text-base leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                {activeTopic && renderContent(activeTopic)}
+              </div>
+
+              {/* Term glossary */}
+              {activeTopic?.terms && Object.keys(activeTopic.terms).length > 0 && (
+                <div className={`mt-8 p-4 rounded-xl ${isDark ? 'bg-white/3' : 'bg-black/2'}`}>
+                  <h3 className={`text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                    <Sparkles size={12} className="text-orange-500" />
+                    Key Terms
+                  </h3>
+                  <div className="grid sm:grid-cols-2 gap-2">
+                    {Object.entries(activeTopic.terms).map(([term, def]) => (
+                      <div key={term} className={`p-3 rounded-lg ${isDark ? 'bg-white/3' : 'bg-black/2'}`}>
+                        <span className="text-orange-500 text-xs font-bold">{term}</span>
+                        <p className={`text-xs mt-1 leading-relaxed ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>{def}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </motion.div>
+          </AnimatePresence>
+        </motion.div>
+      </div>
+
+      {/* Companion AI Bubble */}
+      <div className="fixed bottom-20 right-4 sm:right-8 z-40">
+        <AnimatePresence mode="wait">
+          {companionExpanded && quizTopic ? (
+            <motion.div
+              key="quiz"
+              initial={{ opacity: 0, scale: 0.8, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: 20 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+              className="glass-strong rounded-2xl p-5 w-80 sm:w-96"
+              style={{
+                boxShadow: isDark
+                  ? '0 20px 60px rgba(0,0,0,0.5), 0 0 30px rgba(168,85,247,0.15)'
+                  : '0 20px 60px rgba(0,0,0,0.1), 0 0 30px rgba(168,85,247,0.1)',
+              }}
+            >
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #a855f7, #7c3aed)' }}>
+                  <Brain size={16} className="text-white" />
+                </div>
+                <div>
+                  <div className={`text-sm font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Quick Quiz</div>
+                  <div className={`text-[10px] ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>{quizTopic.title}</div>
+                </div>
+                <button
+                  onClick={() => { setCompanionExpanded(false); setQuizTopic(null) }}
+                  className={`ml-auto p-1 rounded-lg ${isDark ? 'hover:bg-white/10 text-slate-500' : 'hover:bg-black/5 text-slate-400'}`}
+                >
+                  <X size={14} />
+                </button>
+              </div>
+
+              <p className={`text-sm font-medium mb-3 ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                {quizTopic.quiz.question}
+              </p>
+
+              <div className="space-y-2">
+                {quizTopic.quiz.options.map((opt, idx) => {
+                  let style = ''
+                  if (quizResult) {
+                    if (idx === quizTopic.quiz.correct) {
+                      style = 'border-emerald-500/50 bg-emerald-500/10 text-emerald-400'
+                    } else if (idx === quizAnswer && quizResult === 'wrong') {
+                      style = 'border-red-500/50 bg-red-500/10 text-red-400'
+                    }
+                  }
+
+                  return (
+                    <motion.button
+                      key={idx}
+                      onClick={() => handleQuizAnswer(idx)}
+                      disabled={quizResult !== null}
+                      whileHover={{ scale: quizResult ? 1 : 1.02 }}
+                      whileTap={{ scale: quizResult ? 1 : 0.98 }}
+                      className={`w-full text-left p-3 rounded-xl text-xs font-medium transition-all border ${
+                        style || (isDark
+                          ? 'border-white/5 text-slate-300 hover:border-white/15'
+                          : 'border-black/5 text-slate-600 hover:border-black/15')
+                      } ${quizResult ? 'cursor-default' : 'cursor-pointer'}`}
+                    >
+                      <span className="flex items-center gap-2">
+                        <span className={`w-5 h-5 rounded-md flex items-center justify-center text-[10px] font-bold ${
+                          isDark ? 'bg-white/5' : 'bg-black/5'
+                        }`}>
+                          {String.fromCharCode(65 + idx)}
+                        </span>
+                        {opt}
+                        {quizResult && idx === quizTopic.quiz.correct && <Check size={12} className="ml-auto text-emerald-500" />}
+                        {quizResult === 'wrong' && idx === quizAnswer && <X size={12} className="ml-auto text-red-500" />}
+                      </span>
+                    </motion.button>
+                  )
+                })}
+              </div>
+
+              {quizResult && (
+                <motion.div
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className={`mt-3 text-center text-xs font-bold ${quizResult === 'correct' ? 'text-emerald-400' : 'text-red-400'}`}
+                >
+                  {quizResult === 'correct' ? '🎉 Correct! +100 XP' : '❌ Wrong — but keep learning!'}
+                </motion.div>
+              )}
+            </motion.div>
+          ) : (
+            <motion.button
+              key="bubble"
+              onClick={() => {
+                if (quizTopic) setCompanionExpanded(true)
+              }}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0 }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className="relative w-14 h-14 rounded-full flex items-center justify-center cursor-pointer"
+              style={{
+                background: 'linear-gradient(135deg, #a855f7, #7c3aed)',
+                boxShadow: '0 8px 30px rgba(168,85,247,0.3)',
+              }}
+            >
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+                className="absolute inset-0 rounded-full"
+                style={{
+                  background: 'conic-gradient(from 0deg, transparent 60%, rgba(255,255,255,0.15) 80%, transparent 100%)',
+                }}
+              />
+              <Bot size={24} className="text-white relative z-10" />
+              {quizTopic && !companionExpanded && (
+                <motion.div
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 1, repeat: Infinity }}
+                  className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-orange-500 flex items-center justify-center"
+                >
+                  <span className="text-[8px] text-white font-bold">!</span>
+                </motion.div>
+              )}
+            </motion.button>
+          )}
+        </AnimatePresence>
+      </div>
+    </motion.div>
+  )
+}
+
+/* ============================================================
+   DEVELOPER TOGGLE — Pitch Mode Control Bar
+   ============================================================ */
+function DeveloperToggle({ view, setView, resetDemo, lastAction, isDark }) {
+  const [expanded, setExpanded] = useState(true)
+
+  return (
+    <motion.div
+      initial={{ y: 100 }}
+      animate={{ y: 0 }}
+      transition={{ type: 'spring', stiffness: 200, damping: 25, delay: 0.5 }}
+      className="fixed bottom-0 left-0 right-0 z-50"
+    >
+      <div className="max-w-4xl mx-auto px-4 pb-3">
+        <motion.div
+          className="glass-strong rounded-2xl overflow-hidden"
+          layout
+        >
+          {/* Toggle bar */}
+          <button
+            onClick={() => setExpanded(!expanded)}
+            className={`w-full flex items-center justify-between px-4 py-2.5 text-xs ${
+              isDark ? 'text-slate-400' : 'text-slate-500'
+            }`}
+          >
+            <span className="flex items-center gap-2 font-medium">
+              <Layers size={13} className="text-orange-500" />
+              Dev Controls
+            </span>
+            <motion.div animate={{ rotate: expanded ? 180 : 0 }}>
+              <ChevronRight size={13} className="rotate-90" />
+            </motion.div>
+          </button>
+
+          {/* Expanded controls */}
+          <AnimatePresence>
+            {expanded && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <div className="px-4 pb-4 pt-1">
+                  <div className="flex flex-wrap items-center gap-2 mb-3">
+                    <motion.button
+                      onClick={() => setView('organizer-dashboard')}
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                      className={`px-4 py-2 rounded-xl text-xs font-medium flex items-center gap-1.5 transition-colors ${
+                        view === 'organizer-dashboard'
+                          ? 'bg-orange-500 text-white'
+                          : isDark ? 'bg-white/5 text-slate-400 hover:bg-white/10' : 'bg-black/5 text-slate-600 hover:bg-black/8'
+                      }`}
+                    >
+                      <Monitor size={13} />
+                      Organizer View
+                    </motion.button>
+
+                    <motion.button
+                      onClick={() => setView('student-onboarding')}
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                      className={`px-4 py-2 rounded-xl text-xs font-medium flex items-center gap-1.5 transition-colors ${
+                        view === 'student-onboarding'
+                          ? 'bg-blue-500 text-white'
+                          : isDark ? 'bg-white/5 text-slate-400 hover:bg-white/10' : 'bg-black/5 text-slate-600 hover:bg-black/8'
+                      }`}
+                    >
+                      <ScanFace size={13} />
+                      Onboarding
+                    </motion.button>
+
+                    <motion.button
+                      onClick={() => setView('student-live')}
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                      className={`px-4 py-2 rounded-xl text-xs font-medium flex items-center gap-1.5 transition-colors ${
+                        view === 'student-live'
+                          ? 'bg-purple-500 text-white'
+                          : isDark ? 'bg-white/5 text-slate-400 hover:bg-white/10' : 'bg-black/5 text-slate-600 hover:bg-black/8'
+                      }`}
+                    >
+                      <Zap size={13} />
+                      Live Event
+                    </motion.button>
+
+                    <div className={`h-6 w-px mx-1 ${isDark ? 'bg-white/10' : 'bg-black/5'}`} />
+
+                    <motion.button
+                      onClick={resetDemo}
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                      className={`px-4 py-2 rounded-xl text-xs font-medium flex items-center gap-1.5 ${
+                        isDark ? 'bg-red-500/10 text-red-400 hover:bg-red-500/20' : 'bg-red-50 text-red-500 hover:bg-red-100'
+                      }`}
+                    >
+                      <RotateCcw size={13} />
+                      Reset Demo
+                    </motion.button>
+                  </div>
+
+                  {/* Activity log */}
+                  <div className={`flex items-center gap-2 text-[10px] ${isDark ? 'text-slate-600' : 'text-slate-400'}`}>
+                    <Activity size={10} className="text-orange-500 shrink-0" />
+                    <span className="truncate font-mono">{lastAction || 'No actions yet'}</span>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      </div>
+    </motion.div>
+  )
+}
+
+/* ============================================================
+   APP ROOT — Global State & Router
+   ============================================================ */
+export default function App() {
+  const [theme, setTheme] = useState('dark')
+  const [view, setView] = useState('organizer-dashboard')
+  const [points, setPoints] = useState(0)
+  const [schoolsInvited, setSchoolsInvited] = useState(0)
+  const [studentsRegistered, setStudentsRegistered] = useState(0)
+  const [lastAction, setLastAction] = useState('')
+
+  const isDark = theme === 'dark'
+
+  const logAction = useCallback((action) => {
+    setLastAction(`[${new Date().toLocaleTimeString()}] ${action}`)
+  }, [])
+
+  const resetDemo = useCallback(() => {
+    setPoints(0)
+    setSchoolsInvited(0)
+    setStudentsRegistered(0)
+    setView('organizer-dashboard')
+    setLastAction('')
+    logAction('Demo reset')
+  }, [logAction])
+
+  return (
+    <div className={`min-h-screen relative transition-colors duration-500 ${isDark ? 'dark' : 'light'}`}
+      style={{ color: isDark ? '#e2e8f0' : '#1e293b' }}
+    >
+      <AmbientScene isDark={isDark} />
+
+      <Header
+        theme={theme}
+        setTheme={setTheme}
+        view={view}
+        setView={setView}
+        schoolsInvited={schoolsInvited}
+        studentsRegistered={studentsRegistered}
+        points={points}
+        isDark={isDark}
+        logAction={logAction}
+      />
+
+      <main className="relative" style={{ zIndex: 1 }}>
+        <AnimatePresence mode="wait">
+          {view === 'organizer-dashboard' && (
+            <OrganizerDashboard
+              key="org"
+              schoolsInvited={schoolsInvited}
+              setSchoolsInvited={setSchoolsInvited}
+              studentsRegistered={studentsRegistered}
+              setStudentsRegistered={setStudentsRegistered}
+              isDark={isDark}
+              logAction={logAction}
+            />
+          )}
+          {view === 'student-onboarding' && (
+            <StudentOnboarding
+              key="onboard"
+              setStudentsRegistered={setStudentsRegistered}
+              setView={setView}
+              isDark={isDark}
+              logAction={logAction}
+            />
+          )}
+          {view === 'student-live' && (
+            <StudentLive
+              key="live"
+              points={points}
+              setPoints={setPoints}
+              isDark={isDark}
+              logAction={logAction}
+            />
+          )}
+        </AnimatePresence>
+      </main>
+
+      <DeveloperToggle
+        view={view}
+        setView={setView}
+        resetDemo={resetDemo}
+        lastAction={lastAction}
+        isDark={isDark}
+      />
+    </div>
+  )
+}
+
+================================================================================
+  SETUP INSTRUCTIONS
+================================================================================
+
+1. Create a folder and place the files in the structure shown above
+2. Run: npm install
+3. Run: npm run dev
+4. Open: http://localhost:5173/
+
+Dependencies installed:
+  - react, react-dom (v19)
+  - framer-motion (v12)
+  - lucide-react (v1.21)
+  - tailwindcss (v4) with @tailwindcss/vite plugin
+  - vite (v8) with @vitejs/plugin-react
+
+================================================================================
+  END OF ORBIT SOURCE CODE
+================================================================================
