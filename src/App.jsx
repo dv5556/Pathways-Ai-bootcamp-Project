@@ -4,9 +4,8 @@ import {
   Radar, ScanFace, Trophy, Sun, Moon, School, Users, Zap, 
   Rocket, Gauge, Send, BadgeCheck, UserRoundCheck, Flame, 
   BarChart3, Sparkles, LockKeyhole, QrCode, ShieldCheck, Check, 
-  Play, ChevronRight, BrainCircuit, GraduationCap, Edit,
-  Layers, RotateCcw, Activity, Bot, X, Brain, Info, Plus, Trash2,
-  Sliders, ShieldAlert
+  Play, BrainCircuit, GraduationCap, Edit,
+  Layers, Activity, Bot, X, Brain, Info, Plus, Trash2
 } from 'lucide-react';
 
 // ============================================================================
@@ -126,10 +125,6 @@ const PEER_COMPETITORS = [
 
 const GEMINI_API_KEY = "we need api keys pls!!";
 
-// Standard mathematical activation utils
-const sigmoid = (x) => 1 / (1 + Math.exp(-x));
-const dsigmoid = (y) => y * (1 - y);
-
 // Preset datasets coordinates mapped between [0, 1] for neural tutor math engine
 const NEURAL_PRESETS = {
   linear: [
@@ -226,8 +221,10 @@ export default function App() {
     if (displayPoints === points) return;
     const diff = points - displayPoints;
     if (Math.abs(diff) < 2) {
-      setDisplayPoints(points);
-      return;
+      const timer = setTimeout(() => {
+        setDisplayPoints(points);
+      }, 0);
+      return () => clearTimeout(timer);
     }
     const step = Math.ceil(Math.abs(diff) / 10) * Math.sign(diff);
     const timer = setTimeout(() => {
@@ -238,11 +235,18 @@ export default function App() {
 
   useEffect(() => {
     const bodyElement = document.body;
+    const rootElement = document.documentElement;
     if (isDarkMode) {
       bodyElement.classList.remove('orbit-light-mode');
+      bodyElement.classList.add('dark');
+      rootElement.classList.add('dark');
+      rootElement.setAttribute('data-theme', 'dark');
       document.documentElement.style.colorScheme = 'dark';
     } else {
       bodyElement.classList.add('orbit-light-mode');
+      bodyElement.classList.remove('dark');
+      rootElement.classList.remove('dark');
+      rootElement.removeAttribute('data-theme');
       document.documentElement.style.colorScheme = 'light';
     }
   }, [isDarkMode]);
@@ -375,7 +379,7 @@ export default function App() {
       } else {
         throw new Error("Invalid format returned");
       }
-    } catch (err) {
+    } catch {
       setLastSystemEvent("Gemini API call failed. Reverting to failsafe logic.");
       setPoints(prev => prev + 250);
       setGeminiAnalysis({
@@ -508,6 +512,104 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden transition-colors duration-500">
+      
+      {/* Left side organic vine line art */}
+      <div className="side-vine-container left-vine">
+        <svg viewBox="0 0 100 1600" preserveAspectRatio="xMidYMin slice" className="w-full h-full" fill="none" strokeWidth="0.8" strokeLinecap="round" strokeLinejoin="round">
+          <g id="left-vine-section">
+            <path d="M 50,0 C 40,50 60,100 45,150 C 30,200 65,250 50,300 C 35,350 60,400 45,450 C 30,500 65,550 50,600 C 35,650 60,700 45,750 C 35,780 55,790 50,800" />
+            <path d="M 48,30 Q 35,22 40,35 Q 48,38 48,30" />
+            <path d="M 51,45 Q 65,37 60,50 Q 51,53 51,45" />
+            <path d="M 46,65 Q 30,62 35,75 Q 46,73 46,65" />
+            <path d="M 52,80 Q 68,75 62,90 Q 52,93 52,80" />
+            <path d="M 48,105 Q 32,100 38,115 Q 48,113 48,105" />
+            <path d="M 50,120 Q 65,115 58,130 Q 50,133 50,120" />
+            <path d="M 46,140 Q 32,138 36,150 Q 46,148 46,140" />
+            <path d="M 48,165 Q 62,160 55,175 Q 48,178 48,165" />
+            <path d="M 42,185 Q 28,180 32,195 Q 42,193 42,185" />
+            <path d="M 50,210 Q 64,202 59,215 Q 50,218 50,210" />
+            <path d="M 47,225 Q 31,222 36,235 Q 47,233 47,225" />
+            <path d="M 53,240 Q 69,235 63,250 Q 53,253 53,240" />
+            <path d="M 49,265 Q 33,260 39,275 Q 49,273 49,265" />
+            <path d="M 51,280 Q 66,275 59,290 Q 51,293 51,280" />
+            <path d="M 46,305 Q 30,302 35,315 Q 46,313 46,305" />
+            <path d="M 52,320 Q 68,315 62,330 Q 52,333 52,320" />
+            <path d="M 48,345 Q 32,340 38,355 Q 48,353 48,345" />
+            <path d="M 50,360 Q 65,355 58,370 Q 50,373 50,360" />
+            <path d="M 44,385 Q 28,380 32,395 Q 44,393 44,385" />
+            <path d="M 52,410 Q 66,402 61,415 Q 52,418 52,410" />
+            <path d="M 48,425 Q 32,422 37,435 Q 48,433 48,425" />
+            <path d="M 50,440 Q 65,435 59,450 Q 50,453 50,440" />
+            <path d="M 46,465 Q 30,460 36,475 Q 46,473 46,465" />
+            <path d="M 52,480 Q 67,475 60,490 Q 52,493 52,480" />
+            <path d="M 48,505 Q 32,502 37,515 Q 48,513 48,505" />
+            <path d="M 50,520 Q 66,515 60,530 Q 50,533 50,520" />
+            <path d="M 47,545 Q 31,540 36,555 Q 47,553 47,545" />
+            <path d="M 53,560 Q 68,555 61,570 Q 53,573 53,560" />
+            <path d="M 48,585 Q 32,580 38,595 Q 48,593 48,585" />
+            <path d="M 50,610 Q 64,602 59,615 Q 50,618 50,610" />
+            <path d="M 46,625 Q 30,622 35,635 Q 46,633 46,625" />
+            <path d="M 52,640 Q 68,635 62,650 Q 52,653 52,640" />
+            <path d="M 48,665 Q 32,660 38,675 Q 48,673 48,665" />
+            <path d="M 50,680 Q 65,675 58,690 Q 50,693 50,680" />
+            <path d="M 45,705 Q 29,702 34,715 Q 45,713 45,705" />
+            <path d="M 51,720 Q 67,715 61,730 Q 51,733 51,720" />
+            <path d="M 48,745 Q 32,740 38,755 Q 48,753 48,745" />
+            <path d="M 50,760 Q 65,755 58,770 Q 50,773 50,760" />
+            <path d="M 46,785 Q 30,780 35,795 Q 46,793 46,785" />
+          </g>
+          <use href="#left-vine-section" x="0" y="800" />
+        </svg>
+      </div>
+
+      {/* Right side organic vine line art */}
+      <div className="side-vine-container right-vine">
+        <svg viewBox="0 0 100 1600" preserveAspectRatio="xMidYMin slice" className="w-full h-full" fill="none" strokeWidth="0.8" strokeLinecap="round" strokeLinejoin="round">
+          <g id="right-vine-section">
+            <path d="M 50,0 C 60,50 40,100 55,150 C 70,200 35,250 50,300 C 65,350 40,400 55,450 C 70,500 35,550 50,600 C 65,650 40,700 55,750 C 65,780 45,790 50,800" />
+            <path d="M 52,30 Q 65,22 60,35 Q 52,38 52,30" />
+            <path d="M 49,45 Q 35,37 40,50 Q 49,53 49,45" />
+            <path d="M 54,65 Q 70,62 65,75 Q 54,73 54,65" />
+            <path d="M 48,80 Q 32,75 38,90 Q 48,93 48,80" />
+            <path d="M 52,105 Q 68,100 62,115 Q 52,113 52,105" />
+            <path d="M 50,120 Q 35,115 42,130 Q 50,133 50,120" />
+            <path d="M 54,140 Q 68,138 64,150 Q 54,148 54,140" />
+            <path d="M 52,165 Q 38,160 45,175 Q 52,178 52,165" />
+            <path d="M 58,185 Q 72,180 68,195 Q 58,193 58,185" />
+            <path d="M 50,210 Q 36,202 41,215 Q 50,218 50,210" />
+            <path d="M 53,225 Q 69,222 64,235 Q 53,233 53,225" />
+            <path d="M 47,240 Q 31,235 37,250 Q 47,253 47,240" />
+            <path d="M 51,265 Q 67,260 61,275 Q 51,273 51,265" />
+            <path d="M 49,280 Q 34,275 41,290 Q 49,293 49,280" />
+            <path d="M 54,305 Q 70,302 65,315 Q 54,313 54,305" />
+            <path d="M 48,320 Q 32,315 38,330 Q 48,333 48,320" />
+            <path d="M 52,345 Q 68,340 62,355 Q 52,353 52,345" />
+            <path d="M 50,360 Q 35,355 42,370 Q 50,373 50,360" />
+            <path d="M 56,385 Q 72,380 68,395 Q 56,393 56,385" />
+            <path d="M 48,410 Q 36,402 41,415 Q 48,418 48,410" />
+            <path d="M 52,425 Q 68,422 63,435 Q 52,433 52,425" />
+            <path d="M 50,440 Q 35,435 41,450 Q 50,453 50,440" />
+            <path d="M 54,465 Q 70,460 64,475 Q 54,473 54,465" />
+            <path d="M 48,480 Q 33,475 40,490 Q 48,493 48,480" />
+            <path d="M 52,505 Q 68,502 63,515 Q 52,513 52,505" />
+            <path d="M 50,520 Q 34,515 40,530 Q 50,533 50,520" />
+            <path d="M 53,545 Q 69,540 64,555 Q 53,553 53,545" />
+            <path d="M 47,560 Q 32,555 39,570 Q 47,573 47,560" />
+            <path d="M 52,585 Q 68,580 62,595 Q 52,593 52,585" />
+            <path d="M 50,610 Q 36,602 41,615 Q 50,618 50,610" />
+            <path d="M 54,625 Q 70,622 65,635 Q 54,633 54,625" />
+            <path d="M 48,640 Q 32,635 38,650 Q 48,653 48,640" />
+            <path d="M 52,665 Q 68,660 62,675 Q 52,673 52,665" />
+            <path d="M 50,680 Q 35,675 42,690 Q 50,693 50,680" />
+            <path d="M 55,705 Q 71,702 66,715 Q 55,713 55,705" />
+            <path d="M 49,720 Q 33,715 39,730 Q 49,733 49,720" />
+            <path d="M 52,745 Q 68,740 62,755 Q 52,753 52,745" />
+            <path d="M 50,760 Q 35,755 42,770 Q 50,773 50,760" />
+            <path d="M 54,785 Q 70,780 65,795 Q 54,793 54,785" />
+          </g>
+          <use href="#right-vine-section" x="0" y="800" />
+        </svg>
+      </div>
       
       {/* BACKGROUND FLOATING PARTICLES MATRIX (ASYNC PHYSICS DRIFTS) */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
@@ -966,7 +1068,7 @@ function StudentOnboarding({ scanState, studentVerified, studentsRegistered, exe
 // ============================================================================
 
 function StudentLive({
-  curriculumTimeline, processedLeaderboard, points, setPoints, overallCourseProgress, completedTopics, 
+  curriculumTimeline, processedLeaderboard, setPoints, overallCourseProgress, completedTopics, 
   activeTopicId, setActiveTopicId, toggleTopicCompletion, selectedTopicObject,
   activePopoverWord, setActivePopoverWord, companionOpen, setCompanionOpen,
   activeQuizTopic, quizSelectionStatus, validateQuizAnswer, clearedQuizzes,
@@ -1011,7 +1113,7 @@ function StudentLive({
           </p>
 
           <div className="space-y-2">
-            {curriculumTimeline.map((topic, index) => {
+            {curriculumTimeline.map((topic) => {
               const isActive = activeTopicId === topic.id;
               const isChecked = !!completedTopics[topic.id];
               return (
@@ -1571,12 +1673,15 @@ function NeuralNetSandbox({ setPoints, isDarkMode }) {
 
   // Sync preset dataset points on switch
   useEffect(() => {
-    if (dataset === 'custom') {
-      setPointsData([]);
-    } else {
-      setPointsData([...NEURAL_PRESETS[dataset]]);
-    }
-    initWeights();
+    const timer = setTimeout(() => {
+      if (dataset === 'custom') {
+        setPointsData([]);
+      } else {
+        setPointsData([...NEURAL_PRESETS[dataset]]);
+      }
+      initWeights();
+    }, 0);
+    return () => clearTimeout(timer);
   }, [dataset, initWeights]);
 
   // Math: Forward pass
@@ -1860,7 +1965,6 @@ function NeuralNetSandbox({ setPoints, isDarkMode }) {
   }, [dataset, mode, epoch, lossHistory, pointsData, lr]);
 
   // SVG inspection helper builders
-  const getStrokeColor = (w) => w >= 0 ? 'rgba(56, 189, 248, 0.75)' : 'rgba(251, 146, 60, 0.75)';
 
   const handleInspectMouseMove = (e, title, desc, math) => {
     setHoveredNode({

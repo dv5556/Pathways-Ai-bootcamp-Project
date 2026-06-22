@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *, [data-theme='dark'], [data-theme='dark'] *));
+
 @theme {
   --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
@@ -9,14 +11,14 @@
 :root {
   /* Soothing Minimalist Light Mode is Default */
   --bg-base: #fbf9f4;
-  --text-main: #1e2530;
-  --text-muted: #6b7280;
+  --text-main: #1E2229;
+  --text-muted: #475569;
   --accent-orange: #d96b52; /* Terracotta coral */
   --accent-blue: #457b9d;   /* Steel blue */
   --accent-green: #3d8a63;  /* Soft sage green */
   --glass-bg: rgba(251, 249, 244, 0.82);
   --glass-border: rgba(30, 37, 48, 0.08);
-  --grid-color: rgba(30, 37, 48, 0.03);
+  --grid-color: rgba(30, 37, 48, 0.05); /* 5% opacity dark grey accent */
   --shadow-color: rgba(30, 37, 48, 0.04);
   --shadow-glow: rgba(217, 107, 82, 0.12);
 }
@@ -31,7 +33,7 @@ body:not(.orbit-light-mode) {
   --accent-green: #10b981;
   --glass-bg: rgba(12, 16, 23, 0.78);
   --glass-border: rgba(255, 255, 255, 0.06);
-  --grid-color: rgba(255, 255, 255, 0.02);
+  --grid-color: rgba(226, 232, 240, 0.03); /* 3% opacity light blue/grey/silver */
   --shadow-color: rgba(0, 0, 0, 0.35);
   --shadow-glow: rgba(249, 115, 22, 0.08);
 }
@@ -191,3 +193,94 @@ body:not(.orbit-light-mode) .wavy-interactive-underline:hover {
   background: rgba(249, 115, 22, 0.12);
   box-shadow: 0 2px 10px rgba(249, 115, 22, 0.2);
 }
+
+/* Global Light Mode Heading Contrast Enhancements */
+body.orbit-light-mode h1,
+body.orbit-light-mode h2,
+body.orbit-light-mode h3,
+body.orbit-light-mode h4,
+body.orbit-light-mode h5,
+body.orbit-light-mode h6,
+body.orbit-light-mode [class*="text-slate-8"] {
+  color: #1E2229 !important;
+}
+
+/* Global Light Mode Body & Secondary Text Contrast Enhancements */
+body.orbit-light-mode p,
+body.orbit-light-mode [class*="text-slate-5"],
+body.orbit-light-mode [class*="text-slate-45"],
+body.orbit-light-mode [class*="text-slate-6"] {
+  color: #475569 !important; /* legible mid-to-dark grey satisfying WCAG AA */
+}
+
+/* Enforce opacity filters for readable secondary details in light mode */
+body.orbit-light-mode .opacity-40,
+body.orbit-light-mode .opacity-45,
+body.orbit-light-mode .opacity-50 {
+  opacity: 0.75 !important;
+}
+
+/* Dark Mode Input Field Readability Fixes */
+body:not(.orbit-light-mode) input[type="text"],
+body:not(.orbit-light-mode) input[type="number"],
+body:not(.orbit-light-mode) textarea,
+body:not(.orbit-light-mode) select,
+.dark input[type="text"],
+.dark input[type="number"],
+.dark textarea,
+.dark select,
+[data-theme='dark'] input[type="text"],
+[data-theme='dark'] input[type="number"],
+[data-theme='dark'] textarea,
+[data-theme='dark'] select {
+  background-color: #121824 !important;
+  border-color: #2D3748 !important;
+  color: #E2E8F0 !important;
+}
+
+body:not(.orbit-light-mode) input::placeholder,
+body:not(.orbit-light-mode) textarea::placeholder,
+.dark input::placeholder,
+.dark textarea::placeholder,
+[data-theme='dark'] input::placeholder,
+[data-theme='dark'] textarea::placeholder {
+  color: #A0AEC0 !important;
+}
+
+/* Organic Vines Gutter Textures */
+.side-vine-container {
+  display: none;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: calc((100vw - 1280px) / 2 - 16px);
+  z-index: 5; /* Place in background gutters */
+  overflow: hidden;
+}
+
+.side-vine-container svg {
+  stroke: #2D3748;
+  opacity: 0.18; /* Increased for clear yet subtle minimalist visibility in light mode */
+  transition: stroke 0.4s ease, opacity 0.4s ease;
+}
+
+body:not(.orbit-light-mode) .side-vine-container svg,
+.dark .side-vine-container svg,
+[data-theme='dark'] .side-vine-container svg {
+  stroke: #CBD5E1;
+  opacity: 0.12; /* Increased for clear yet subtle minimalist visibility in dark mode */
+}
+
+@media (min-width: 1340px) {
+  .side-vine-container.left-vine {
+    display: block;
+    left: 8px;
+  }
+  .side-vine-container.right-vine {
+    display: block;
+    right: 8px;
+  }
+}
+
+
